@@ -8,10 +8,11 @@ cllimit = 500
 
 HEADERS = {
     "User-Agent": f"BWIKI2Dict/0.1.0; github.com/YCR160/bwiki2dict",
-    "Accept-Encoding": "gzip, deflate"
+    "Accept-Encoding": "gzip, deflate",
 }
 
-def fetch_all_titles(api_url = "https://wiki.biligame.com/sr/api.php"):
+
+def fetch_all_titles(api_url="https://wiki.biligame.com/sr/api.php"):
     data = {}
     all_data = {}
 
@@ -24,7 +25,7 @@ def fetch_all_titles(api_url = "https://wiki.biligame.com/sr/api.php"):
     while cont:
         clcontinue = data.get("continue", {}).get("clcontinue")
 
-        if 'gapcontinue' in data.get("continue", {}).get("continue", {}):
+        if "gapcontinue" in data.get("continue", {}).get("continue", {}):
             gapcontinue = data.get("continue", {}).get("gapcontinue")
 
         # print(f"gapcontinue: {gapcontinue}, clcontinue: {clcontinue}")
@@ -45,6 +46,7 @@ def fetch_all_titles(api_url = "https://wiki.biligame.com/sr/api.php"):
         cont = data.get("continue", False)
 
     return all_data
+
 
 if __name__ == "__main__":
     import json

@@ -10,7 +10,7 @@ http = urllib3.PoolManager()
 
 HEADERS = {
     "User-Agent": f"BWIKI2Dict/0.1.0; github.com/YCR160/bwiki2dict",
-    "Accept-Encoding": "gzip, deflate"
+    "Accept-Encoding": "gzip, deflate",
 }
 
 api_url = "https://wiki.biligame.com/sr/api.php"

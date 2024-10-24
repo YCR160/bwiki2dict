@@ -24,6 +24,7 @@ def filter_titles(all_data, part_categories):
 
     return part_titles
 
+
 if __name__ == "__main__":
     from fetch import fetch_all_titles
 
