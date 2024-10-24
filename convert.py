@@ -33,7 +33,7 @@ def export(words, **kwargs):
         #     print("Failed to convert, ignoring:", pinyin)
         #     continue
 
-        if table is not None:
+        if fixfile is not None:
             fixed_pinyin = manual_fix(word, table)
             if fixed_pinyin is not None:
                 pinyin = fixed_pinyin
