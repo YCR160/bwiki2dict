@@ -74,10 +74,9 @@ def tweak_remove_regex(regexes):
     compiled_patterns = [re.compile(pattern) for pattern in regexes]
 
     def cb(words):
-        ret = words
         for pattern in compiled_patterns:
-            ret = {item for item in ret if not pattern.match(item)}
-        return ret
+            words = {item for item in words if not pattern.match(item)}
+        return words
 
     return cb
 
@@ -94,14 +93,25 @@ def tweak_len_gt(min_length):
     return cb
 
 
+def tweak_pruning(words):
+    words = sorted(words)
+    ret = [words[0]]
+    for word in words:
+        if ret[-1] not in word or len(ret[-1]) <= 1:
+            ret.append(word)
+
+    return set(ret)
+
+
 tweaks = [
     tweak_strip,
     tweak_remove_word([]),  # 删除包含指定词的词条
     tweak_split_word(["&", "-", "(", ")", "：", "（", "）"]),
     tweak_remove_chars(" ·αβ“”•「」！，"),
     tweak_match_cjk,
-    tweak_remove_regex([]),  # 删除指定正则匹配的词条
+    tweak_remove_regex([r".*第[0-9一二三四五六七八九十百]+(期|辑)", r".*版本.*", r".*专题.*"]),  # 删除指定正则匹配的词条
     tweak_len_gt(1),
+    tweak_pruning,
 ]
 
 if __name__ == "__main__":

@@ -27,6 +27,7 @@ def fetch_all_titles(api_url="https://wiki.biligame.com/sr/api.php"):
 
         if "gapcontinue" in data.get("continue", {}).get("continue", {}):
             gapcontinue = data.get("continue", {}).get("gapcontinue")
+            print(f"已获取{all_data['query']['pages'].__len__()}条数据，目前：{gapcontinue}")
 
         # print(f"gapcontinue: {gapcontinue}, clcontinue: {clcontinue}")
 

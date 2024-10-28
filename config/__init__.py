@@ -11,4 +11,8 @@ configs = {
         "api_url": config.arknights.api_url,
         "part_categories": config.arknights.part_categories
     },
+    "ys": {
+        "api_url": config.ys.api_url,
+        "part_categories": config.ys.part_categories
+    }
 }

@@ -20,6 +20,7 @@ def export(words, **kwargs):
     if fixfile is not None:
         table = json.load(open(fixfile, "r", encoding="utf-8"))
     count = 0
+    words = sorted(words)
     for word in words:
         # line = line.rstrip("\n")
         pinyins = lazy_pinyin(word, errors=lambda x: DEFAULT_PLACEHOLDER)
