@@ -30,11 +30,11 @@ jobs:
       - name: 打包词典
         run: |
           mkdir dicts
-          mv *.yaml dicts
+          mv *.dict.txt dicts
           zip -r dicts.zip dicts
 
       - name: 上传
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: 自动生成词典
+          tag_name: v0.1
           files: dicts.zip

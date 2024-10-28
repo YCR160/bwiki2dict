@@ -16,4 +16,4 @@ for game, data in configs.items():
         filtered_titles = func(filtered_titles)
     pinyin_titles = export(filtered_titles)
 
-    rime(pinyin_titles, name=game)
+    txt(pinyin_titles, name=game)
