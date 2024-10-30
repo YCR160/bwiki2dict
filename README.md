@@ -3,14 +3,16 @@
 使用 BWIKI 生成游戏词典
 
 ```sh
-pip install mw2fcitx
+pip install -r requirements.txt
+python main.py
 ```
 
 ## 使用
 
-```sh
-mw2fcitx -c config_script.py
-```
+[深蓝词库转换](https://github.com/studyzy/imewlconverter)可以将词库转换为其他格式导入导出，比如[搜狗拼音](https://github.com/studyzy/imewlconverter/wiki/Sougou_Pinyin)、[微软拼音](https://github.com/studyzy/imewlconverter/wiki/Win10Ms_Pinyin)、[MacOS 自带拼音](https://github.com/studyzy/imewlconverter/wiki/MacPlist)等。
+
+| ![](https://github.com/user-attachments/assets/4a39dbf4-4a3d-49ac-ad19-efca295ca4ed) | ![](https://github.com/user-attachments/assets/7addfc57-7a73-43d1-ba52-db4effaf8091) |
+| --- | --- |
 
 ## api
 
@@ -31,43 +33,43 @@ https://wiki.biligame.com/sr/api.php?action=query&generator=allpages&prop=catego
 ```json
 // https://wiki.biligame.com/sr/api.php?action=query&generator=allpages&prop=categories&format=json
 {
-    "continue": {
-        "clcontinue": "4291|正在计时的页面",
-        "continue": "||"
-    },
-    "query": {
-        "pages": {
-            "406": {
-                "pageid": 406,
-                "ns": 0,
-                "title": "1.0版本「通往群星的轨道」前瞻直播总结",
-                "categories": [
-                    {
-                        "ns": 14,
-                        "title": "分类:正在计时的页面"
-                    },
-                    {
-                        "ns": 14,
-                        "title": "分类:版本更新"
-                    }
-                ]
-            },
-            // ...
-            "4291": {
-                "pageid": 4291,
-                "ns": 0,
-                "title": "1.2版本「仙骸有终」更新专题",
-                "categories": [
-                    {
-                        "ns": 14,
-                        "title": "分类:含有受损文件链接的页面"
-                    }
-                    // <--- 在这里被截断，"clcontinue": "4291|正在计时的页面"
-                ]
-            },
-            // ...
-        }
+  "continue": {
+    "clcontinue": "4291|正在计时的页面",
+    "continue": "||"
+  },
+  "query": {
+    "pages": {
+      "406": {
+        "pageid": 406,
+        "ns": 0,
+        "title": "1.0版本「通往群星的轨道」前瞻直播总结",
+        "categories": [
+          {
+            "ns": 14,
+            "title": "分类:正在计时的页面"
+          },
+          {
+            "ns": 14,
+            "title": "分类:版本更新"
+          }
+        ]
+      },
+      // ...
+      "4291": {
+        "pageid": 4291,
+        "ns": 0,
+        "title": "1.2版本「仙骸有终」更新专题",
+        "categories": [
+          {
+            "ns": 14,
+            "title": "分类:含有受损文件链接的页面"
+          }
+          // <--- 在这里被截断，"clcontinue": "4291|正在计时的页面"
+        ]
+      }
+      // ...
     }
+  }
 }
 ```
 
@@ -76,32 +78,32 @@ https://wiki.biligame.com/sr/api.php?action=query&generator=allpages&prop=catego
 ```json
 // https://wiki.biligame.com/sr/api.php?action=query&generator=allpages&prop=categories&format=json&clcontinue=7059|正在计时的页面
 {
-    "batchcomplete": "",
-    "continue": {
-        "gapcontinue": "1.5版本「迷离幻夜谈」更新专题",
-        "continue": "gapcontinue||"
-    },
-    "query": {
-        "pages": {
-            "406": {
-                "pageid": 406,
-                "ns": 0,
-                "title": "1.0版本「通往群星的轨道」前瞻直播总结"
-                // <--- clcontinue=7059|正在计时的页面 之前的不显示分类
-            },
-            // ...
-            "10321": {
-                "pageid": 10321,
-                "ns": 0,
-                "title": "*完美*大挑战！",
-                "categories": [
-                    {
-                        "ns": 14,
-                        "title": "分类:事件"
-                    }
-                ]
-            }
-        }
+  "batchcomplete": "",
+  "continue": {
+    "gapcontinue": "1.5版本「迷离幻夜谈」更新专题",
+    "continue": "gapcontinue||"
+  },
+  "query": {
+    "pages": {
+      "406": {
+        "pageid": 406,
+        "ns": 0,
+        "title": "1.0版本「通往群星的轨道」前瞻直播总结"
+        // <--- clcontinue=7059|正在计时的页面 之前的不显示分类
+      },
+      // ...
+      "10321": {
+        "pageid": 10321,
+        "ns": 0,
+        "title": "*完美*大挑战！",
+        "categories": [
+          {
+            "ns": 14,
+            "title": "分类:事件"
+          }
+        ]
+      }
     }
+  }
 }
 ```
