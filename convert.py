@@ -2,7 +2,6 @@
 
 import json
 from pypinyin import lazy_pinyin
-from opencc import OpenCC
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
 
@@ -15,7 +14,6 @@ def manual_fix(text, table):
 
 def export(words, **kwargs):
     result = ""
-    converter = OpenCC()
     fixfile = kwargs.get("fixfile")
     if fixfile is not None:
         table = json.load(open(fixfile, "r", encoding="utf-8"))
@@ -40,7 +38,7 @@ def export(words, **kwargs):
                 pinyin = fixed_pinyin
                 print(f"Fixing {word} to {pinyin}")
 
-        result += "\t".join((converter.convert(word), pinyin, "0"))
+        result += "\t".join((word, pinyin, "0"))
         result += "\n"
         count += 1
 
