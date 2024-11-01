@@ -14,6 +14,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: YCR160/bili-comment
+          token: ${{ secrets.GH_PAT }}
+          path: comment
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
