@@ -1,3 +1,13 @@
+def all_titles(all_data):
+    all_pages = all_data.get("query", {}).get("pages", {})
+
+    # 所有标题
+    all_titles = set()
+    for _, page in all_pages.items():
+        all_titles.add(page.get("title", ""))
+
+    return all_titles
+
 def filter_titles(all_data, part_categories):
     all_pages = all_data.get("query", {}).get("pages", {})
 

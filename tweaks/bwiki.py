@@ -5,23 +5,6 @@ def tweak_strip(words):
     return ret
 
 
-def tweak_remove_word(items):
-    def not_in(word):
-        for i in items:
-            if word.find(i) != -1:
-                return False
-        return True
-
-    def cb(words):
-        ret = set()
-        for word in words:
-            if not_in(word):
-                ret.add(word)
-        return ret
-
-    return cb
-
-
 def tweak_split_word(spliters):
 
     def cb(words):
@@ -30,20 +13,6 @@ def tweak_split_word(spliters):
             for word in words:
                 for j in word.split(i):
                     tmp.add(j)
-            words = tmp
-        return words
-
-    return cb
-
-
-def tweak_remove_chars(chars):
-
-    def cb(words):
-        for char in chars:
-            tmp = set()
-            for word in words:
-                updated_word = word.replace(char, "")
-                tmp.add(updated_word)
             words = tmp
         return words
 
@@ -68,19 +37,6 @@ def tweak_match_cjk(words):
     return tmp
 
 
-def tweak_remove_regex(regexes):
-    import re
-
-    compiled_patterns = [re.compile(pattern) for pattern in regexes]
-
-    def cb(words):
-        for pattern in compiled_patterns:
-            words = {item for item in words if not pattern.match(item)}
-        return words
-
-    return cb
-
-
 def tweak_len_gt(min_length):
 
     def cb(words):
@@ -93,25 +49,11 @@ def tweak_len_gt(min_length):
     return cb
 
 
-def tweak_pruning(words):
-    words = sorted(words)
-    ret = [words[0]]
-    for word in words:
-        if ret[-1] not in word or len(ret[-1]) <= 1:
-            ret.append(word)
-
-    return set(ret)
-
-
 tweaks = [
     tweak_strip,
-    tweak_remove_word([]),  # 删除包含指定词的词条
-    tweak_split_word(["&", "-", "(", ")", "：", "（", "）"]),
-    tweak_remove_chars(" ·αβ“”•「」！，"),
+    tweak_split_word(["&", "-", "(", ")", "：", "【", "】", "（", "）"]),
     tweak_match_cjk,
-    tweak_remove_regex([r".*第[0-9一二三四五六七八九十百]+(期|辑)", r".*版本.*", r".*专题.*"]),  # 删除指定正则匹配的词条
     tweak_len_gt(1),
-    tweak_pruning,
 ]
 
 if __name__ == "__main__":
