@@ -43,5 +43,5 @@ jobs:
       - name: 上传
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v0.1
+          tag_name: v0.2
           files: dicts.zip
