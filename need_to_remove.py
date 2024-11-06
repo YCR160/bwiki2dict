@@ -1,8 +1,4 @@
-# 出现频率很高，但输入法能自动联想的词
-common_words = [
-    '角色',
-]
+remove_words = ["凯尔西", "卡夫卡", "卢克", "夜阑", "小吉", "尤拉", "星能", "瑟琳"]
 
-remove_words = [
-    '卡夫卡',
-]
+if __name__ == "__main__":
+    print(sorted(remove_words))

@@ -1,9 +1,40 @@
 # https://github.com/outloudvi/mw2fcitx/blob/master/mw2fcitx/exporters/opencc.py
 
 import json
+import requests
 from pypinyin import lazy_pinyin
 
 DEFAULT_PLACEHOLDER = "_ERROR_"
+session = requests.Session()
+
+
+def hanzi_to_pinyin(word):
+    pinyins = lazy_pinyin(word)
+    return "".join(pinyins)
+
+
+def pinyin_to_hanzi(pinyin):
+    url = "https://inputtools.google.com/request"
+    params = {
+        "text": pinyin,
+        "ime": "zh-t-i0-pinyin",
+        "oe": "utf-8",
+        "num": 3,
+        "app": "bwiki2dict",
+    }
+    response = session.post(url, data=params)
+    if response.status_code == 200:
+        return response.json()[1][0][1]
+    else:
+        return None
+
+
+def is_preferred_word(word):
+    pinyin = hanzi_to_pinyin(word)
+    preferred_words = pinyin_to_hanzi(pinyin)
+    if preferred_words:
+        return word in preferred_words  # 判断输入的词是否为候选词
+    return False
 
 
 def manual_fix(text, table):

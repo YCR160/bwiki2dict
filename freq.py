@@ -1,5 +1,6 @@
 import os
-from need_to_remove import common_words, remove_words
+from convert import is_preferred_word
+from need_to_remove import remove_words
 
 def filter_freq(titles, filtered_titles, **kwargs):
     name = kwargs.get("name") or "bwiki"
@@ -23,11 +24,10 @@ def filter_freq(titles, filtered_titles, **kwargs):
     base = avg * 0.1
 
     ret = set()
-    remove = set(common_words + remove_words)
     for filtered_title in filtered_titles:
         ret.add(filtered_title)
     for title in titles:
-        if freq[title] > base and title not in remove:
+        if (freq[title] > base and title not in remove_words and not is_preferred_word(title)):
             ret.add(title)
 
     with open(name + '.freq.txt', 'w', encoding='utf-8') as f:
