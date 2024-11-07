@@ -8,6 +8,7 @@ def all_titles(all_data):
 
     return all_titles
 
+
 def filter_titles(all_data, part_categories):
     all_pages = all_data.get("query", {}).get("pages", {})
 

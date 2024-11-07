@@ -5,14 +5,14 @@ import config.ys
 configs = {
     "sr": {
         "api_url": config.sr.api_url,
-        "part_categories": config.sr.part_categories
+        "part_categories": config.sr.part_categories,
     },
     "arknights": {
         "api_url": config.arknights.api_url,
-        "part_categories": config.arknights.part_categories
+        "part_categories": config.arknights.part_categories,
     },
     "ys": {
         "api_url": config.ys.api_url,
-        "part_categories": config.ys.part_categories
-    }
+        "part_categories": config.ys.part_categories,
+    },
 }

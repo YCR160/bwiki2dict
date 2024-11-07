@@ -2,14 +2,15 @@ import os
 from convert import is_preferred_word
 from need_to_remove import remove_words
 
+
 def filter_freq(titles, filtered_titles, **kwargs):
     name = kwargs.get("name") or "bwiki"
-    path = f'comment/{name}/'
+    path = f"comment/{name}/"
 
-    comment = ''
+    comment = ""
     if os.path.exists(path):
         for file in os.listdir(path):
-            with open(path + file, 'r', encoding='utf-8') as f:
+            with open(path + file, "r", encoding="utf-8") as f:
                 comment += f.read()
 
     freq = {}
@@ -27,17 +28,21 @@ def filter_freq(titles, filtered_titles, **kwargs):
     for filtered_title in filtered_titles:
         ret.add(filtered_title)
     for title in titles:
-        if (freq[title] > base and title not in remove_words and not is_preferred_word(title)):
+        if (
+            freq[title] > base
+            and title not in remove_words
+            and not is_preferred_word(title)
+        ):
             ret.add(title)
 
-    with open(name + '.freq.txt', 'w', encoding='utf-8') as f:
+    with open(name + ".freq.txt", "w", encoding="utf-8") as f:
         freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
         for w, fq in freq:
             if w in ret:
-                f.write(f'{w} {fq}\n')
-        f.write('\n')
+                f.write(f"{w} {fq}\n")
+        f.write("\n")
         for w, fq in freq:
             if w not in ret:
-                f.write(f'{w} {fq}\n')
+                f.write(f"{w} {fq}\n")
 
     return ret
