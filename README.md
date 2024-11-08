@@ -2,19 +2,30 @@
 
 使用 BWIKI 生成游戏词典
 
-```sh
-pip install -r requirements.txt
-python main.py
+通过收集 WIKI 词条标题并进行基础的分词处理，利用官方账号在某常用视频网站的评论区作为语料进行词频统计，筛选出高频词汇，借助谷歌输入法 API 过滤掉常见候选词，生成最小化精简词库。
+
+```txt
+评论区高频词前十如下：
+星铁：崩坏 花火 流萤 景元 星穹铁道 黄泉 砂金 仙舟 星神 镜流
+方舟：方舟 明日方舟 音律联觉 干员 博士 模组 源石 肉鸽 夏活 凯尔希
+原神：原神 钟离 米哈游 宵宫 刻晴 旅行者 雷神 散兵 璃月 须弥
 ```
 
-## 使用
+## 使用说明
 
 [深蓝词库转换](https://github.com/studyzy/imewlconverter)可以将词库转换为其他格式导入导出，比如[搜狗拼音](https://github.com/studyzy/imewlconverter/wiki/Sougou_Pinyin)、[微软拼音](https://github.com/studyzy/imewlconverter/wiki/Win10Ms_Pinyin)、[MacOS 自带拼音](https://github.com/studyzy/imewlconverter/wiki/MacPlist)等。
 
 | ![](https://github.com/user-attachments/assets/4a39dbf4-4a3d-49ac-ad19-efca295ca4ed) | ![](https://github.com/user-attachments/assets/7addfc57-7a73-43d1-ba52-db4effaf8091) |
 | --- | --- |
 
-## api
+## 运行
+
+```sh
+pip install -r requirements.txt
+python main.py
+```
+
+## API
 
 https://wiki.biligame.com/sr/api.php?action=query&generator=allpages&prop=categories&format=json&gaplimit=500&cllimit=500&gapcontinue=一封未寄出的信&clcontinue=10318|事件
 
