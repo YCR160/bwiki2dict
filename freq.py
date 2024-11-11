@@ -6,11 +6,16 @@ from need_to_remove import remove_words
 def filter_freq(titles, filtered_titles, **kwargs):
     name = kwargs.get("name") or "bwiki"
     path = f"comment/{name}/"
+    fb_path = "comment/bwiki/"
 
     comment = ""
     if os.path.exists(path):
         for file in os.listdir(path):
             with open(path + file, "r", encoding="utf-8") as f:
+                comment += f.read()
+    elif os.path.exists(fb_path):
+        for file in os.listdir(fb_path):
+            with open(fb_path + file, "r", encoding="utf-8") as f:
                 comment += f.read()
 
     freq = {}
