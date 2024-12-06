@@ -1,4 +1,5 @@
 import os
+import ahocorasick
 from convert import is_preferred_word
 from need_to_remove import remove_words
 
@@ -8,19 +9,25 @@ def filter_freq(titles, filtered_titles, **kwargs):
     path = f"comment/{name}/"
     fb_path = "comment/bwiki/"
 
-    comment = ""
-    if os.path.exists(path):
-        for file in os.listdir(path):
-            with open(path + file, "r", encoding="utf-8") as f:
-                comment += f.read()
-    elif os.path.exists(fb_path):
-        for file in os.listdir(fb_path):
-            with open(fb_path + file, "r", encoding="utf-8") as f:
-                comment += f.read()
-
-    freq = {}
+    # 构建 Aho-Corasick 自动机
+    automaton = ahocorasick.Automaton()
     for title in titles:
-        freq[title] = comment.count(title)
+        automaton.add_word(title, title)
+    automaton.make_automaton()
+
+    freq = dict.fromkeys(titles, 0)
+
+    def process_files(dir_path):
+        if os.path.exists(dir_path):
+            for file in os.listdir(dir_path):
+                with open(os.path.join(dir_path, file), "r", encoding="utf-8") as f:
+                    for line in f:
+                        for end_index, title in automaton.iter(line):
+                            freq[title] += 1
+
+    process_files(path)
+    if all(value == 0 for value in freq.values()):
+        process_files(fb_path)
 
     # 出现频率高于 0.1 倍平均值的，视为高频词
     sum = 0
