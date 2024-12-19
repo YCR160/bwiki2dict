@@ -1,3 +1,4 @@
+import time
 import urllib3
 from deepmerge import always_merger
 
@@ -40,11 +41,14 @@ def fetch_all_titles(api_url="https://wiki.biligame.com/sr/api.php"):
         # print(now_fetch_url)
 
         resp = http.request("GET", now_fetch_url, headers=HEADERS, retries=3)
-        data = resp.json()
 
-        all_data = always_merger.merge(all_data, data)
-
-        cont = data.get("continue", False)
+        if resp.status == 200 and "application/json" in resp.headers.get("Content-Type"):
+            data = resp.json()
+            all_data = always_merger.merge(all_data, data)
+            cont = data.get("continue", False)
+        else:
+            print("Error: ", resp.status, resp.headers.get("Content-Type"))
+            time.sleep(5)
 
     return all_data
 
