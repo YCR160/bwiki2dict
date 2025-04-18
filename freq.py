@@ -22,8 +22,22 @@ def filter_freq(titles, filtered_titles, **kwargs):
             for file in os.listdir(dir_path):
                 with open(os.path.join(dir_path, file), "r", encoding="utf-8") as f:
                     for line in f:
+                        matches = []
                         for end_index, title in automaton.iter(line):
-                            freq[title] += 1
+                            matches.append((end_index, title))
+                        
+                        # 按结束索引和词长排序，确保超集优先
+                        matches.sort(key=lambda x: (-x[0], -len(x[1])))
+
+                        counted = set()
+                        for _, title in matches:
+                            # 检查超集是否已经匹配
+                            is_subset = any(
+                                title in other and title != other for other in counted
+                            )
+                            if not is_subset:
+                                freq[title] += 1
+                                counted.add(title)
 
     process_files(path)
     if all(value == 0 for value in freq.values()):
@@ -58,3 +72,14 @@ def filter_freq(titles, filtered_titles, **kwargs):
                 f.write(f"{w} {fq}\n")
 
     return ret
+
+if __name__ == "__main__":
+    import time
+    start = time.time()
+    # titles 是所有词语，filtered_titles 是人物名（要保留的词语）
+    with open("titles.txt", "r", encoding="utf-8") as f:
+        titles = f.read().splitlines()
+    with open("filtered_titles.txt", "r", encoding="utf-8") as f:
+        filtered_titles = f.read().splitlines()
+    filter_freq(titles, filtered_titles)
+    print(time.time() - start)

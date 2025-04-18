@@ -5,20 +5,6 @@ def tweak_strip(words):
     return ret
 
 
-def tweak_split_word(spliters):
-
-    def cb(words):
-        for i in spliters:
-            tmp = set()
-            for word in words:
-                for j in word.split(i):
-                    tmp.add(j)
-            words = tmp
-        return words
-
-    return cb
-
-
 def tweak_match_cjk(words):
     def is_cjk(char):
         return "\u4e00" <= char <= "\u9fff"
@@ -26,14 +12,16 @@ def tweak_match_cjk(words):
     tmp = set()
     for word in words:
         new_word = ""
+        original_word = ""
         for char in word:
             if is_cjk(char):
                 new_word += char
+                original_word += char
             else:
                 tmp.add(new_word)
                 new_word = ""
-        if new_word:
-            tmp.add(new_word)
+        tmp.add(new_word)
+        tmp.add(original_word)
     return tmp
 
 
@@ -51,7 +39,6 @@ def tweak_len_gt(min_length):
 
 tweaks = [
     tweak_strip,
-    tweak_split_word(["&", "-", "(", ")", "：", "【", "】", "（", "）"]),
     tweak_match_cjk,
     tweak_len_gt(1),
 ]
